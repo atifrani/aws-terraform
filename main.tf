@@ -47,3 +47,31 @@ resource "aws_route_table_association" "dev_public_asoc" {
   subnet_id      = aws_subnet.dev_public_subnet.id
   route_table_id = aws_route_table.dev_rt.id
 }
+
+resource "aws_security_group" "dev_sg" {
+  name        = "dev_sg"
+  description = "dev sercurity group"
+  vpc_id      = aws_vpc.dev_vpc.id
+
+  tags = {
+    Name = "dev_sg"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "dev_allow_http_ipv4" {
+  security_group_id = aws_security_group.dev_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 80
+  ip_protocol       = "tcp"
+  to_port           = 80
+}
+
+
+resource "aws_vpc_security_group_egress_rule" "dev_allow_all_ipv4" {
+  security_group_id = aws_security_group.dev_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 0
+  ip_protocol       = "tcp"
+  to_port           = 0
+}
+
