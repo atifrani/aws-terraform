@@ -42,3 +42,8 @@ resource "aws_route" "default_route" {
   destination_cidr_block    = "0.0.0.0/22"
   gateway_id = aws_internet_gateway.dev_igw.id
 }
+
+resource "aws_route_table_association" "dev_public_asoc" {
+  subnet_id      = aws_subnet.dev_public_subnet.id
+  route_table_id = aws_route_table.dev_rt.id
+}
