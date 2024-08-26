@@ -39,7 +39,7 @@ resource "aws_route_table" "dev_rt" {
 
 resource "aws_route" "default_route" {
   route_table_id            = aws_route_table.dev_rt.id
-  destination_cidr_block    = "0.0.0.0/22"
+  destination_cidr_block    = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.dev_igw.id
 }
 
@@ -61,9 +61,9 @@ resource "aws_security_group" "dev_sg" {
 resource "aws_vpc_security_group_ingress_rule" "dev_allow_http_ipv4" {
   security_group_id = aws_security_group.dev_sg.id
   cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 80
+  from_port         = 22
   ip_protocol       = "tcp"
-  to_port           = 80
+  to_port           = 22
 }
 
 
@@ -94,6 +94,8 @@ resource "aws_instance" "dev_instance" {
   vpc_security_group_ids = [aws_security_group.dev_sg.id]
 
   subnet_id   = aws_subnet.dev_public_subnet.id
+
+  user_data = file("userdata.tpl")
 
 
 }
