@@ -1,9 +1,9 @@
 data "aws_ami" "server_ami" {
     most_recent = true
-    owners = ["099720109477"]
+    owners = ["137112412989"]
 
     filter {
         name = "name"
-        values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-arm64-server-*"]
+        values = ["amzn2-ami-kernel-5.10-hvm-2.0.20240816.0-x86_64-gp2"]
     }
 }
