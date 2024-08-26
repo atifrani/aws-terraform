@@ -75,3 +75,8 @@ resource "aws_vpc_security_group_egress_rule" "dev_allow_all_ipv4" {
   to_port           = 0
 }
 
+resource "aws_key_pair" "dev_auth" {
+  key_name   = "dev-key"
+  public_key = file("~/.ssh/tfdev.pub")
+}
+
