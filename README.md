@@ -2,7 +2,7 @@
 
 Welcome ton the hands-on Terraform basics lab.
 
-In this hands-on lab, you are going to build your own aws dev environment that allows you to automatically connect vscode running on you laptop to an EC2 instance running amz linux in AWS.  
+In this hands-on lab, you are going to build your own aws dev environment that allows you to automatically connect vscode running on you laptop to an EC2 instance running Ubuntu in AWS.  
 
 This lab help you to start from scratch and all you need is a little familiarity with AWS services.  
 
