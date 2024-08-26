@@ -97,5 +97,15 @@ resource "aws_instance" "dev_instance" {
 
   user_data = file("userdata.tpl")
 
+  provisioner "local-exec" {
+
+    command = templatefile("win-ssh-config.tpl", {
+              hostname = self.public_ip,
+              user = "ubuntu",
+              identityfile = "~/.ssh/tfdev"
+    }) 
+    interpreter = ["Powershell", "-Command"]
+  }
+
 
 }
