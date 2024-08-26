@@ -80,3 +80,20 @@ resource "aws_key_pair" "dev_auth" {
   public_key = file("~/.ssh/tfdev.pub")
 }
 
+
+resource "aws_instance" "dev_instance" {
+  instance_type = "t3.micro"
+  ami = data.aws_ami.server_ami.id
+
+  tags = {
+    name = "dev_instance"
+  }
+
+  key_name = aws_key_pair.dev_auth.id
+
+  vpc_security_group_ids = [aws_security_group.dev_sg.id]
+
+  subnet_id   = aws_subnet.dev_public_subnet.id
+
+
+}
