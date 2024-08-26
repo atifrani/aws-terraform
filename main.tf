@@ -4,7 +4,7 @@ resource "aws_vpc" "dev_vpc" {
   enable_dns_support   = true
 
   tags = {
-    Name = "dev"
+    Name = "${var.env}"
   }
 }
 
@@ -15,7 +15,7 @@ resource "aws_subnet" "dev_public_subnet" {
   availability_zone       = "eu-west-1a"
 
   tags = {
-    Name = "dev-public"
+    Name = "${var.env}_public"
   }
 }
 
@@ -23,7 +23,7 @@ resource "aws_internet_gateway" "dev_igw" {
   vpc_id = aws_vpc.dev_vpc.id
 
   tags = {
-    Name = "dev_igw"
+    Name = "${var.env}_igw"
   }
 }
 
@@ -33,7 +33,7 @@ resource "aws_route_table" "dev_rt" {
   route = []
 
   tags = {
-    Name = "dev_public_rt"
+    Name = "${var.env}_public_rt"
   }
 }
 
@@ -49,12 +49,12 @@ resource "aws_route_table_association" "dev_public_asoc" {
 }
 
 resource "aws_security_group" "dev_sg" {
-  name        = "dev_sg"
+  name        = "${var.env}_sg"
   description = "dev sercurity group"
   vpc_id      = aws_vpc.dev_vpc.id
 
   tags = {
-    Name = "dev_sg"
+    Name = "${var.env}_sg"
   }
 }
 
@@ -76,7 +76,7 @@ resource "aws_vpc_security_group_egress_rule" "dev_allow_all_ipv4" {
 }
 
 resource "aws_key_pair" "dev_auth" {
-  key_name   = "dev-key"
+  key_name   = "${var.env}-key"
   public_key = file("~/.ssh/tfdev.pub")
 }
 
@@ -86,7 +86,7 @@ resource "aws_instance" "dev_instance" {
   ami = data.aws_ami.server_ami.id
 
   tags = {
-    name = "dev_instance"
+    name = "${var.env}_instance"
   }
 
   key_name = aws_key_pair.dev_auth.id
